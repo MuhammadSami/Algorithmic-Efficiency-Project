@@ -2,6 +2,7 @@ import java.io.PrintStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 public class LinkedListMultiset<T> extends Multiset<T>
 {
 
@@ -71,7 +72,7 @@ public class LinkedListMultiset<T> extends Multiset<T>
 
 	public void removeOne(T item) {
 		Node currNode = head;
-
+		System.out.println("size :"+size);
 		// check if value is head node
 		if (currNode.getValue().equals(item)) {
 			// check if length of 1
@@ -101,30 +102,38 @@ public class LinkedListMultiset<T> extends Multiset<T>
 		// search for value in rest of list
 		else {
 			currNode = currNode.getNext();
+		
+			for (int i=0; i<size; i++){
+					if(currNode.getValue().equals(item)){
+						if(currNode.counter==1){
+						
+							System.out.println("REmove this node.");
+							if(currNode.getNext() == null){
+								System.out.println("next node is null :)");
+								Node prevNode = currNode.getPrev();
+								prevNode.setNext(null);
+								currNode.setPrev(null);
+								tail = prevNode;
+								size--;
+							}else if(currNode.getNext()!=null){
+									System.out.println("next node is not null");
+									Node nextNode = currNode.getNext();
+									Node prevNode = currNode.getPrev();
 
-			while (currNode != null) {
-				if (currNode.getValue().equals(item)) {
-					if(currNode.counter == 1){
-						Node prevNode = currNode.getPrev();
-						prevNode.setNext(currNode.getNext());
-						// check if tail
-						if (currNode.getNext() != null) {
-							currNode.getNext().setPrev(prevNode);
+									prevNode.setNext(nextNode);
+									nextNode.setPrev(prevNode);
+									currNode.setPrev(null);
+									currNode.setNext(null);
+									size--;
+
+								}
+							}else{
+								currNode.counter--;
+							}
 						}
-						else {
-							tail = prevNode;
-						}
-						currNode = null;
-						size--;
-						break;
-					}else if(currNode.counter >1){
-						currNode.counter--;
-						break;
 					}
-				currNode = currNode.getNext();
-				}	
-			}
-		}
+					currNode = currNode.getNext();	
+				}
 	}// end of removeOne()
 
 	public Node removeNode(Node current)

@@ -58,7 +58,10 @@ public class MultisetTester
 				// add
 				case "A":
 					if (tokens.length == 2) {
+						long startTime = System.nanoTime();
 						multiset.add(tokens[1]);
+						long endTime = System.nanoTime();
+						searchOutWriter.println("That took " + (endTime - startTime) + "  nanoseconds to add this "+tokens[1]+" node");
 					}
 					else {
 						System.err.println(lineNum + ": not enough tokens.");
@@ -67,8 +70,11 @@ public class MultisetTester
 				// search
 				case "S":
 					if (tokens.length == 2) {
+						long startTime = System.nanoTime();
 						int foundNumber = multiset.search(tokens[1]);
 						searchOutWriter.println(tokens[1] + " " + foundNumber);
+						long endTime = System.nanoTime();
+						searchOutWriter.println("That took " + (endTime - startTime) + "  nanoseconds search this node");
 					}
 					else {
 						// we print -1 to indicate error for automated testing
@@ -79,7 +85,10 @@ public class MultisetTester
 				// remove one instance
 				case "RO":
 					if (tokens.length == 2) {
+						long startTime = System.nanoTime();
 						multiset.removeOne(tokens[1]);
+						long endTime = System.nanoTime();
+						searchOutWriter.println("That took " + (endTime - startTime) + "  nanoseconds to remove one "+tokens[1]+" node");
 					}
 					else {
 						System.err.println(lineNum + ": not enough tokens.");
@@ -88,7 +97,10 @@ public class MultisetTester
 				// remove all instances
 				case "RA":
 					if (tokens.length == 2) {
+						long startTime = System.nanoTime();
 						multiset.removeAll(tokens[1]);
+						long endTime = System.nanoTime();
+						searchOutWriter.println("That took " + (endTime - startTime) + "  nanoseconds  to remove all of this "+tokens[1]+" nodes");
 					}
 					else {
 						System.err.println(lineNum + ": not enough tokens.");
