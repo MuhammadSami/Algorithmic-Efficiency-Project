@@ -9,6 +9,19 @@ import java.util.*;
  */
 public class MultisetTester
 {
+	static int addCounter = 0;
+	static int searchCounter = 0;
+	static int removeOneCounter = 0;
+	static int removeAllCounter = 0;
+	
+	static double addTotalTime = 0;
+	static double searchTotalTime = 0;
+	static double removeOneTotalTime = 0;
+	static double removeAllTotalTime = 0;
+	
+	
+	
+	
 	/** Name of class, used in error messages. */
 	protected static final String progName = "MultisetTester";
 	
@@ -62,6 +75,8 @@ public class MultisetTester
 						multiset.add(tokens[1]);
 						long endTime = System.nanoTime();
 						//searchOutWriter.println("That took " + (endTime - startTime) + "  nanoseconds to add this "+tokens[1]+" node");
+						addTotalTime += (endTime - startTime)/1000.0; 
+						addCounter++;
 					}
 					else {
 						System.err.println(lineNum + ": not enough tokens.");
@@ -72,9 +87,11 @@ public class MultisetTester
 					if (tokens.length == 2) {
 						long startTime = System.nanoTime();
 						int foundNumber = multiset.search(tokens[1]);
-						searchOutWriter.println(tokens[1] + " " + foundNumber);
 						long endTime = System.nanoTime();
+						//searchOutWriter.println(tokens[1] + " " + foundNumber);
 						//searchOutWriter.println("That took " + (endTime - startTime) + "  nanoseconds search this node");
+						searchTotalTime = (endTime - startTime)/1000.0;
+						searchCounter++;
 					}
 					else {
 						// we print -1 to indicate error for automated testing
@@ -89,6 +106,8 @@ public class MultisetTester
 						multiset.removeOne(tokens[1]);
 						long endTime = System.nanoTime();
 						//searchOutWriter.println("That took " + (endTime - startTime) + "  nanoseconds to remove one "+tokens[1]+" node");
+						removeOneTotalTime += (endTime - startTime)/1000.0;
+						removeOneCounter++;
 					}
 					else {
 						System.err.println(lineNum + ": not enough tokens.");
@@ -101,6 +120,8 @@ public class MultisetTester
 						multiset.removeAll(tokens[1]);
 						long endTime = System.nanoTime();
 						//searchOutWriter.println("That took " + (endTime - startTime) + "  nanoseconds  to remove all of this "+tokens[1]+" nodes");
+						removeAllTotalTime += (endTime - startTime)/1000.0;
+						removeAllCounter++;
 					}
 					else {
 						System.err.println(lineNum + ": not enough tokens.");
@@ -112,6 +133,10 @@ public class MultisetTester
 					break;
 				// quit
 				case "Q":
+					searchOutWriter.println("Add:\r\n  Add Time          : "+addTotalTime+"\r\n  Add(Count)        : "+addCounter+"\r\n");
+					searchOutWriter.println("Search:\r\n  Search Time       : "+searchTotalTime+"\r\n  Search(Count)     : "+searchCounter+"\r\n");
+					searchOutWriter.println("Remove:\r\n  RemoveOne Time    : "+removeOneTotalTime+"\r\n  RemoveOne(Count)  : "+removeOneCounter+"\r\n");
+					searchOutWriter.println("RemoveAll:\r\n  RemoveAll Time    : "+removeAllTotalTime+"\r\n  RemoveAll(Count)  : "+removeAllCounter+"\r\n");
 					bQuit = true;
 					break;
 				default:
